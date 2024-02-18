@@ -91,12 +91,20 @@ function Search({ products, onSubmit }) {
                 </Select>
             </div>
             <div class="m-3 mt-4">
-                <Button variant="outlined" startIcon={<KeyboardDoubleArrowDownIcon />}>
+                <Button style={{ borderColor: '#3a06d6' }} variant="outlined" startIcon={<KeyboardDoubleArrowDownIcon />}>
 
                 </Button>
             </div>
             <div class="m-3 mt-4">
-                <Button variant="contained" size="large" sx={{ width: '185px' }} onClick={handleSubmit}>SEARCH</Button>
+                <Button sx={{
+                    width: '185px',
+                    backgroundColor: '#3a06d6', // Change the background color to your desired color
+                    color: 'white', // Change the text color to contrast with the background color
+                    borderRadius: '10px', // Adjust the border radius to round the corners
+                    '&:hover': {
+                        backgroundColor: 'primary', // Change the hover color if needed
+                    },
+                }} variant="contained" size="large" onClick={handleSubmit}>SEARCH</Button>
             </div>
         </div>
     );

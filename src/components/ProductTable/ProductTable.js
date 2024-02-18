@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputLabel } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { Select } from '@mui/material';
@@ -11,17 +11,16 @@ import { TableRow } from '@mui/material';
 import { Container } from '@mui/material';
 import { TableBody } from '@mui/material';
 import { Table } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import Pagination from '@mui/material/Pagination';
 import { OutlinedInput } from '@mui/material';
 import { ListItemText } from '@mui/material';
 import EditForm from '../EditForm/EditForm';
-import { Modal } from '@mui/material';
-
-export default function ProductTable({ products,search }) {
+import { Modal } from '@mui/material'
+export default function ProductTable({ products, search }) {
     console.log(search);
     const [paginatedArray, setPaginatedArray] = useState(products.slice(0, 10));
-    const [searchCriteria,setSearchCriteria] = useState(search);
+    const [searchCriteria, setSearchCriteria] = useState(search);
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -32,17 +31,17 @@ export default function ProductTable({ products,search }) {
             },
         },
     };
-    
-        //setPaginatedArray(products.slice(0, 10));
-    if(searchCriteria != search) {
-        if(Object.keys(search).length > 0) {
+
+    //setPaginatedArray(products.slice(0, 10));
+    if (searchCriteria != search) {
+        if (Object.keys(search).length > 0) {
             const filteringProducts = products.filter(product => {
                 //console.log("search --> ",product.shipify.toString().includes(search.searchInput)," --- ",product.id," --- ",product.shipify.toString()," --- ", search.searchInput);
-                if (( search.searchInput == "" || product.id.toString().includes(search.searchInput) || product.id.toString() === search.searchInput || product.shipify.toString().includes(search.searchInput) || product.shipify.toString() === search.searchInput || product.customer.includes(search.searchInput) || product.customer === search.searchInput || product.email.includes(search.searchInput) || product.email === search.searchInput || product.country.includes(search.searchInput) || product.country === search.searchInput || product.shipping.includes(search.searchInput) || product.shipping === search.searchInput || product.source.includes(search.searchInput) || product.source === search.searchInput || product.type.includes(search.searchInput) || product.type === search.searchInput) && (search.status == '' || search.status === product.status)) {
-                return true
+                if ((search.searchInput == "" || product.id.toString().includes(search.searchInput) || product.id.toString() === search.searchInput || product.shipify.toString().includes(search.searchInput) || product.shipify.toString() === search.searchInput || product.customer.includes(search.searchInput) || product.customer === search.searchInput || product.email.includes(search.searchInput) || product.email === search.searchInput || product.country.includes(search.searchInput) || product.country === search.searchInput || product.shipping.includes(search.searchInput) || product.shipping === search.searchInput || product.source.includes(search.searchInput) || product.source === search.searchInput || product.type.includes(search.searchInput) || product.type === search.searchInput) && (search.status == '' || search.status === product.status)) {
+                    return true
                 }
                 else {
-                return false
+                    return false
                 }
             }
             );
@@ -50,7 +49,7 @@ export default function ProductTable({ products,search }) {
             setSearchCriteria(search);
         }
     }
-    
+
     const columnNames = [
         'SHIPIFY#',
         'DATE',
@@ -157,10 +156,18 @@ export default function ProductTable({ products,search }) {
                     </Select>
                 </div>
                 <div class="m-3 mt-4">
-                    <Button variant="contained" size="large" sx={{ width: '250px' }}>DISPATCH SELECTED</Button>
+                    <Button sx={{
+                        width: '250px',
+                        backgroundColor: '#3a06d6', // Change the background color to your desired color
+                        color: 'white', // Change the text color to contrast with the background color
+                        borderRadius: '10px', // Adjust the border radius to round the corners
+                        '&:hover': {
+                            backgroundColor: 'primary', // Change the hover color if needed
+                        },
+                    }} variant="contained" size="large" >DISPATCH SELECTED</Button>
                 </div>
                 <div>
-                    <Pagination count={10} sx={{ width: '500px' }} onChange={changePage}  color="primary"  shape="rounded" />
+                    <Pagination count={10} sx={{ width: '500px' }} onChange={changePage} color="primary" shape="rounded" />
                 </div>
             </div>
 
@@ -314,7 +321,7 @@ export default function ProductTable({ products,search }) {
                                                         color: '#3e3e3e',
                                                         textTransform: 'none',
                                                     }}>
-                                                    <EditIcon fontSize="small" />
+                                                    <EditNoteIcon fontSize="small" />
                                                 </Button>
                                                 {/* <Modal
                                                     open={open}
@@ -322,9 +329,9 @@ export default function ProductTable({ products,search }) {
                                                     aria-labelledby="form-modal"
                                                     aria-describedby="form-modal-description"
                                                 > */}
-                                                    {open && <div>
-                                                        <EditForm product={product}/>
-                                                    </div>}
+                                                {open && <div>
+                                                    <EditForm product={product} />
+                                                </div>}
                                                 {/* </Modal> */}
                                             </Typography>
                                         </TableCell>
