@@ -11,14 +11,19 @@ import { TableRow } from '@mui/material';
 import { Container } from '@mui/material';
 import { TableBody } from '@mui/material';
 import { Table } from '@mui/material';
+import { TextField } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import Pagination from '@mui/material/Pagination';
 import { OutlinedInput } from '@mui/material';
 import { ListItemText } from '@mui/material';
-import EditForm from '../EditForm/EditForm';
 import { Modal } from '@mui/material'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 export default function ProductTable({ products, search }) {
-    console.log(search);
     const [paginatedArray, setPaginatedArray] = useState(products.slice(0, 10));
     const [searchCriteria, setSearchCriteria] = useState(search);
     const ITEM_HEIGHT = 48;
@@ -32,11 +37,9 @@ export default function ProductTable({ products, search }) {
         },
     };
 
-    //setPaginatedArray(products.slice(0, 10));
     if (searchCriteria != search) {
         if (Object.keys(search).length > 0) {
             const filteringProducts = products.filter(product => {
-                //console.log("search --> ",product.shipify.toString().includes(search.searchInput)," --- ",product.id," --- ",product.shipify.toString()," --- ", search.searchInput);
                 if ((search.searchInput == "" || product.id.toString().includes(search.searchInput) || product.id.toString() === search.searchInput || product.shipify.toString().includes(search.searchInput) || product.shipify.toString() === search.searchInput || product.customer.includes(search.searchInput) || product.customer === search.searchInput || product.email.includes(search.searchInput) || product.email === search.searchInput || product.country.includes(search.searchInput) || product.country === search.searchInput || product.shipping.includes(search.searchInput) || product.shipping === search.searchInput || product.source.includes(search.searchInput) || product.source === search.searchInput || product.type.includes(search.searchInput) || product.type === search.searchInput) && (search.status == '' || search.status === product.status)) {
                     return true
                 }
@@ -67,7 +70,6 @@ export default function ProductTable({ products, search }) {
         const {
             target: { value },
         } = event;
-        // console.log("VALUE~~~~", value);
         if ((value.length === 1 && value === 'ALL COLUMN') || value.length === 0) {
             setSelectedColumn(columnNames);
         }
@@ -90,7 +92,7 @@ export default function ProductTable({ products, search }) {
 
     const [open, setOpen] = useState(false);
 
-    const handleOpen = () => {
+    const handleClickOpen = () => {
         setOpen(true);
     };
     const handleClose = () => {
@@ -310,7 +312,7 @@ export default function ProductTable({ products, search }) {
                                                     whiteSpace: 'nowrap',
                                                 }}>
                                                 <Button
-                                                    onClick={handleOpen}
+                                                    onClick={handleClickOpen}
                                                     variant="outlined"
                                                     sx={{
                                                         backgroundColor: 'transparent',
@@ -323,16 +325,159 @@ export default function ProductTable({ products, search }) {
                                                     }}>
                                                     <EditNoteIcon fontSize="small" />
                                                 </Button>
-                                                {/* <Modal
+                                                <Modal
                                                     open={open}
                                                     onClose={handleClose}
                                                     aria-labelledby="form-modal"
                                                     aria-describedby="form-modal-description"
-                                                > */}
-                                                {open && <div>
-                                                    <EditForm product={product} />
-                                                </div>}
-                                                {/* </Modal> */}
+                                                >
+                                                    <Dialog
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        PaperProps={{
+                                                            component: 'form',
+                                                            // onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+                                                            //     event.preventDefault();
+                                                            //     const formData = new FormData(event.currentTarget);
+                                                            //     const formJson = Object.fromEntries((formData as any).entries());
+                                                            //     const email = formJson.email;
+                                                            //     console.log(email);
+                                                            //     handleClose();
+                                                            // },
+                                                        }}
+                                                    >
+                                                        <DialogTitle>Edit Form</DialogTitle>
+                                                        <DialogContent>
+                                                            <DialogContentText>
+                                                            </DialogContentText>
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="id"
+                                                                name="id"
+                                                                label="ID"
+                                                                value={product.id}
+                                                                type="string"
+                                                                fullWidth
+                                                                variant="standard"
+                                                                disabled
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="shipify"
+                                                                name="shipify"
+                                                                label="Shipify#"
+                                                                value={product.shipify}
+                                                                type="integer"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="date"
+                                                                name="date"
+                                                                label=""
+                                                                value={(new Date(Date.parse(product.date))).toISOString().split('T')[0]}
+                                                                type="date"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="status"
+                                                                name="status"
+                                                                label="Status"
+                                                                value={product.status}
+                                                                type="string"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="customer"
+                                                                name="customer"
+                                                                label="Customer"
+                                                                value={product.customer}
+                                                                type="string"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="email"
+                                                                name="email"
+                                                                label="Email Address"
+                                                                value={product.email}
+                                                                type="email"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="country"
+                                                                name="country"
+                                                                label="Country"
+                                                                value={product.country}
+                                                                type="string"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="shipping"
+                                                                name="shipping"
+                                                                label="Shipping"
+                                                                value={product.shipping}
+                                                                type="string"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="source"
+                                                                name="source"
+                                                                label="Source"
+                                                                value={product.source}
+                                                                type="string"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                            <TextField
+                                                                autoFocus
+                                                                required
+                                                                margin="dense"
+                                                                id="type"
+                                                                name="type"
+                                                                label="Order Type"
+                                                                value={product.type}
+                                                                type="string"
+                                                                fullWidth
+                                                                variant="standard"
+                                                            />
+                                                        </DialogContent>
+                                                        <DialogActions>
+                                                            <Button onClick={handleClose}>Cancel</Button>
+                                                            <Button type="submit">Save</Button>
+                                                        </DialogActions>
+                                                    </Dialog>
+                                                </Modal>
                                             </Typography>
                                         </TableCell>
 
