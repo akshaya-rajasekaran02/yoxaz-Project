@@ -10,15 +10,17 @@ import { useState } from 'react';
 
 function Search({ products, onSubmit }) {
     const [statusArray, setStatusArray] = useState(processStatusList);
-    const [searchInput, setSearchInput] = useState('');
+    const [searchInput, setSearchInput] = useState('');  //Search input of search bar
     const [category, setCategory] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('');    //Search input from status dropdown
 
     const handleSubmit = () => {
         // Pass the user input to the onSubmit function provided by the parent component
         onSubmit({ searchInput, category, status });
     };
     //processStatusList();
+
+    // Create the Status list, to show it in the Status Dropdown
     function processStatusList() {
         const statusList = [];
 
@@ -33,6 +35,7 @@ function Search({ products, onSubmit }) {
     return (
         <div style={styles.container}>
             <div class="m-3">
+                {/* Search Bar */}
                 <h6 class="text-start">What are you looking for?</h6>
                 <TextField
                     style={styles.searchContainer}
@@ -48,6 +51,8 @@ function Search({ products, onSubmit }) {
                     }}
                 />
             </div>
+
+            {/* Category Dropdown */}
             <div class="m-3" style={styles.dropdownContainer}>
                 <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold', textAlign: 'left' }}>Category</InputLabel>
                 <Select
@@ -64,6 +69,8 @@ function Search({ products, onSubmit }) {
                     <MenuItem value={'seller'}>Seller</MenuItem>
                 </Select>
             </div>
+
+            {/* Status Dropdown */}
             <div class="m-3" style={styles.dropdownContainer}>
                 <InputLabel id="demo-simple-select-label" sx={{ fontWeight: 'bold', textAlign: 'left' }}>Status</InputLabel>
                 <Select
@@ -87,14 +94,17 @@ function Search({ products, onSubmit }) {
                         <MenuItem value={item} key={item}>{item}</MenuItem>
 
                     ))}
-                    <MenuItem value='all'>All</MenuItem>
+                    <MenuItem value={'all'}>All</MenuItem>
                 </Select>
             </div>
+
             <div class="m-3 mt-4">
                 <Button style={{ borderColor: '#3a06d6' }} variant="outlined" startIcon={<KeyboardDoubleArrowDownIcon />}>
 
                 </Button>
             </div>
+
+            {/* Search Button */}
             <div class="m-3 mt-4">
                 <Button sx={{
                     width: '185px',

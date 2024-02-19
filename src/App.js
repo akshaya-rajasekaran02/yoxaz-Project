@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import Header from "./components/Header/Header"
 import SearchAndFilters from "./components/Search/Search"
 import ProductTable from "./components/ProductTable/ProductTable"
+
+//Data to show in the table
 let data = [
   { id: 1077620, shipify: 17713, date: '22 Jan 2020', status: 'Dispatched', customer: 'Rohit', email: 'rohit456@mail.com', country: 'India', shipping: 'Indian Post Api', source: 'ShopifyAU', type: 'Seller' },
   { id: 1077621, shipify: 17715, date: '22 Jan 2020', status: 'Pending', customer: 'Ahmed', email: 'ahmed.123@mail.com', country: 'North America', shipping: 'North American Post Api', source: 'ShopifyAU', type: 'Owner' },
@@ -26,11 +28,14 @@ function App() {
     // Handle the submitted data here
     setSearchCriteria(formData);
   };
+
+  //Create new order
   function createProduct(product) {
     setProducts(oldValue => [...oldValue, product]);
   };
+  
   return (
-    <div className="App">
+    <div className="App" style={styles.container}>
       <Header callBack={createProduct}></Header>
       <SearchAndFilters products={products} onSubmit={handleSubmit}></SearchAndFilters>
       <ProductTable products={products} search={searchCriteria}></ProductTable>
@@ -38,4 +43,9 @@ function App() {
   );
 }
 
+const styles = {
+  container: {
+      background: '#f2f4fc',
+  }
+}
 export default App;

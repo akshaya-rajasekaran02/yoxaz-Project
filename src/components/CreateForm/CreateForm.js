@@ -8,11 +8,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 function CreateForm({ callBack }) {
-    // Add your form logic here
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Add form submission logic here
-    };
 
     const [open, setOpen] = React.useState(true);
 
@@ -22,6 +17,7 @@ function CreateForm({ callBack }) {
 
 
     return (
+        // Form to Create New Order 
         <React.Fragment>
             <Dialog
                 open={open}
@@ -32,9 +28,6 @@ function CreateForm({ callBack }) {
                         event.preventDefault();
                         const formData = new FormData(event.currentTarget);
                         const formJson = Object.fromEntries(formData.entries());
-                        const email = formJson.email;
-                        const date = formJson.date;
-                        const shipify = formJson.shipify;
                         callBack(formJson);
                         console.log(formJson);
                         handleClose();
@@ -159,8 +152,10 @@ function CreateForm({ callBack }) {
                     />
                 </DialogContent>
                 <DialogActions>
+                    {/* Button to exit from New order Form  */}
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button type="submit">Save</Button>
+                    {/* Save Button to show the newly created data in table */}
+                    <Button type="submit">Save</Button> 
                 </DialogActions>
             </Dialog>
         </React.Fragment>

@@ -24,8 +24,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function ProductTable({ products, search }) {
-    const [paginatedArray, setPaginatedArray] = useState(products.slice(0, 10));
+    const [paginatedArray, setPaginatedArray] = useState(products.slice(0, 5));
     const [searchCriteria, setSearchCriteria] = useState(search);
+
+    //Values for Checkbox dropdown in table
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -37,6 +39,8 @@ export default function ProductTable({ products, search }) {
         },
     };
 
+
+    // Searching Condition
     if (searchCriteria != search) {
         if (Object.keys(search).length > 0) {
             const filteringProducts = products.filter(product => {
@@ -66,6 +70,7 @@ export default function ProductTable({ products, search }) {
     ];
     const [selectedColumn, setSelectedColumn] = React.useState(columnNames);
 
+    //To show the columns selected in the dropdown
     const handleChange = (event) => {
         const {
             target: { value },
@@ -82,9 +87,10 @@ export default function ProductTable({ products, search }) {
 
     };
 
+    // Pagination Condition
     const changePage = (event, page) => {
-        let starttIndex = (page - 1) * 10;
-        let endIndex = (page * 10);
+        let starttIndex = (page - 1) * 5;
+        let endIndex = (page * 5);
 
         let temArray = products.slice(starttIndex, endIndex);
         setPaginatedArray(temArray);
@@ -222,6 +228,8 @@ export default function ProductTable({ products, search }) {
                                             </InputLabel>
                                         </Box>
                                     </TableCell>
+
+                                    {/* Selected column will show on the table, if none of the column is selected it will show all the column */}
                                     {selectedColumn.map((column) => (
                                         <TableCell sx={{ display: 'table-cell', padding: '10px', textAlign: 'center' }} key={column}>
                                             <Typography
@@ -325,6 +333,8 @@ export default function ProductTable({ products, search }) {
                                                     }}>
                                                     <EditNoteIcon fontSize="small" />
                                                 </Button>
+
+                                                {/* Edi Form Dialog */}
                                                 <Modal
                                                     open={open}
                                                     onClose={handleClose}

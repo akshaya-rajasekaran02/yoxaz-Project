@@ -6,6 +6,8 @@ import CreateForm from '../CreateForm/CreateForm';
 import { Modal } from '@mui/material';
 
 function Header({ callBack }) {
+
+    // Open and Close condition for Create form modal
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -27,6 +29,8 @@ function Header({ callBack }) {
                 <h2>Orders</h2>
             </div>
             <div class="m-3">
+
+                {/* Button to Create New Order */}
                 <Button sx={{
                     backgroundColor: '#3a06d6', // Change the background color to your desired color
                     color: 'white', // Change the text color to contrast with the background color
@@ -35,12 +39,14 @@ function Header({ callBack }) {
                         backgroundColor: 'primary', // Change the hover color if needed
                     },
                 }} variant="contained" onClick={handleOpen}>Create New</Button>
+
                 <Modal
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="form-modal"
                     aria-describedby="form-modal-description"
                 >
+                    {/* Form to Create New Order */}
                     <div>
                         <CreateForm callBack={callBackSubmitted} />
                     </div>
